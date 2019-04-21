@@ -1,3 +1,15 @@
-body{
-    color:red;
+.darken-3{
+    color:white;
+}
+.container{
+    padding:5px;
+    border: 2px solid teal;
+    border-radius: 5px;
+}
+#blaine{
+    max-width: 90%;
+    height:auto;
+}
+.img-holder{
+    text-align:center;
 }

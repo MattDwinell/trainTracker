@@ -1,25 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!--Links to stylesheets and scripts-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
-<link rel="stylesheet" href="assets/css/style.css" type="text/css">
-<script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-   <div class="container">
-       <div class="row">
-           <div class=
-       </div>
-   </div>
+    <div class="container">
+        <div class="row teal lighten-2">
+            <div class=" col s10">Train Tracker</div>
+        </div>
+        <div class="row teal lighten-2">
+            <div class=" col s10">Tracking all of the trains </div>
+        </div>
+
+        <div class="row">
+            <div class="col s10 purple darken-3">Current Train Schedule</div>
+        </div>
+        <div class="row cyan lighten-4">
+            <div class=" col s3">Train Name </div>
+            <div class=" col s3">Destination </div>
+            <div class=" col s2">Frequency</div>
+            <div class=" col s2">Next Arrival </div>
+            <div class=" col s2">Minutes Away </div>
+        </div>
+        <div class="row cyan lighten-5">
+            <div class=" col s3" id="name-display">name dump div</div>
+            <div class=" col s3" id="destination-display">destination dump div</div>
+            <div class=" col s2" id="frequency-display">Frequency dump div</div>
+            <div class=" col s2" id="arrival-display">arrival dump div </div>
+            <div class=" col s2" id="minutes-display">Minutes Away dump div </div>
+        </div>
+        <div class="row">
+            <div class="col s12 purple darken-3">Add a new train</div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Train Name Here" id="new-train" type="text" class="validate">
+                        <label for="new-train">name of train</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="new-destination"> Train Destination</label>
+                        <input placeholder="Destination Here" id="new-destination" type="text" class="validate">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="(HH: mm)" id="new-first-time" type="text" class="validate">
+                        <label for="new-first-time">Time of First Arrival (military time please)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="(in minutes)" id="new-minutes" type="text" class="validate">
+                        <label for="new-minutes">Frequency of train's arrival</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="submit" class="btn waves-effect waves-light" type="submit" name="action">Add Train
+                        <i class="material-icons right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="img-holder">
+                    <img id="blaine" src="assets/images/blaine-the-mono.png">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--  JavaScript links for Materialize, firebase, and app.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
     <script src="assets/javascript/app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
 </body>
+
 </html>
