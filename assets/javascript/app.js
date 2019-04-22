@@ -63,7 +63,7 @@ console.log(nextTrainTime);
     console.log(snapshot.val());
     var newTrain = $("<p>").text(snapshot.val().trainName);
     var newDestination = $("<p>").text(snapshot.val().destination);
-    var newFrequency = $("<p>").text(snapshot.val().frequency + "  t4min.");
+    var newFrequency = $("<p>").text(snapshot.val().frequency + " min.");
     var newNextTrain = $("<p>").text(snapshot.val().nextTrainTime);
     var newMinutesToNextTrain = $("<p>").text(snapshot.val().minutesToNextTrain);
     $("#name-display").append(newTrain);
