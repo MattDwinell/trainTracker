@@ -19,34 +19,60 @@ $(document).ready(function () {
     var militaryFormat = "HH:mm";
     var nextTrain = "";
     var minutesToNextTrain = 0;
-    var firstTrain = moment(trainInput, militaryFormat);
-    var timeGap = firstTrain.diff(moment(), "minutes");
+    if (trainName && frequency && trainInput && destination) {
 
-    if (timeGap > 0) {
-      nextTrain = firstTrain;
-      minutesToNextTrain = timeGap;
-      console.log(nextTrain, minutesToNextTrain);
-    } else if (timeGap== 0){
-      nextTrain = firstTrain;
-      minutesToNextTrain = 0;
-      console.log(nexttrain, minutesToNextTrain);
+      var firstTrain = moment(trainInput, militaryFormat);
+      var timeGap = firstTrain.diff(moment(), "minutes");
 
-    }else {
-
-      var timeGap2 = frequency - Math.abs(timeGap % frequency);
-      nextTrain =moment().add(timeGap2, "minutes");
-      minutesToNextTrain = timeGap2;
-      console.log(nextTrain);
-      console.log(minutesToNextTrain);
+      if (timeGap > 0) {
+        nextTrain = firstTrain.format(militaryFormat);
+        minutesToNextTrain = timeGap;
+        console.log(nextTrain, minutesToNextTrain);
+      } else if (timeGap == 0) {
+        nextTrain = firstTrain.format(militaryFormat);
+        minutesToNextTrain = 0;
+        console.log(nextTrain, minutesToNextTrain);
+      } else {
+        var timeGap2 = frequency - Math.abs(timeGap % frequency);
+        temp= moment().add(timeGap2, "minutes");
+        nextTrain = moment(temp).format("HH:mm");
+        minutesToNextTrain = timeGap2;
+        console.log(nextTrain);
+        console.log(minutesToNextTrain);
+      }
+nextTrainTime = moment(nextTrain, militaryFormat);
+console.log(nextTrainTime);
+nextTrainTime = nextTrainTime._i;
+console.log(nextTrainTime);
+      database.ref().push({
+        trainName: trainName,
+        destination: destination,
+        frequency: frequency,
+        nextTrainTime: nextTrainTime,
+        minutesToNextTrain: minutesToNextTrain
+      })
+      $("#new-train").val("");;
+      $("#new-destination").val("");
+      $("#new-frequency").val("");
+      $("#new-first-time").val("");
+    } else {
+      alert("Pleaase fill in all of the input fields properly before clicking submit");
     }
-    if (trainName && frequency && firstTrain && destination) {
-
-
-    }
-
+  })
+  database.ref().on("child_added", function (snapshot) {
+    console.log(snapshot.val());
+    var newTrain = $("<p>").text(snapshot.val().trainName);
+    var newDestination = $("<p>").text(snapshot.val().destination);
+    var newFrequency = $("<p>").text(snapshot.val().frequency + "  t4min.");
+    var newNextTrain = $("<p>").text(snapshot.val().nextTrainTime);
+    var newMinutesToNextTrain = $("<p>").text(snapshot.val().minutesToNextTrain);
+    $("#name-display").append(newTrain);
+    $("#destination-display").append(newDestination);
+    $("#frequency-display").append(newFrequency);
+    $("#arrival-display").append(newNextTrain);
+    $("#minutes-display").append(newMinutesToNextTrain);
 
   })
-
 
 
 
