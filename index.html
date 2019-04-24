@@ -14,7 +14,22 @@
 </head>
 
 <body>
-    <div class="container">
+    <form id="authentication">
+        <h4> Please input your username and password to access this app.</h4>
+        <input type="text" placeholder = "username for this session" id ="user-name">
+        <input type="text" placeholder = "email" id="email">
+        <input type="password" placeholder="password" id="password">
+        <button class="btn waves-effect waves-light" id="sign-in"> Sign in</button>
+        <button class="btn waves-effect waves-light" id="register">Register</button>
+        <button class= "btn waves-effect waves-light sign-out">Sign out</button>
+
+    </form>
+    <div class="container" id="train-tracker">
+        <div class="row">
+            <div class="col s9" id="current-user"></div>
+            
+            <div class="col s3"> <button class="btn waves-effect waves-light sign-out">SignOut</button></div>
+        </div>
         <div class="row teal lighten-2">
             <div class=" col s10">Train Tracker. Tracking all of the trains. Because they're on tracks.</div>
         </div>
@@ -70,6 +85,9 @@
                     <button id="submit" class="btn waves-effect waves-light" type="submit" name="action">Add Train
                         <i class="material-icons right"></i>
                     </button>
+                    <button id="clear" class="btn waves-effect waves-light" type="submit" name="action">Clear Schedule
+                            <i class="material-icons right"></i>
+                        </button>
                 </div>
             </div>
             <div class="col s6">
@@ -85,6 +103,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
     <script src="assets/javascript/app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+
 </body>
 
 </html>

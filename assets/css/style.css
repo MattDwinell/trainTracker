@@ -19,3 +19,12 @@
     font-size: 200%;
     font-weight: bold;
 }
+#train-tracker{
+    visibility:hidden;
+}
+#authentication{
+    width:80%;
+    padding: 20px;
+    margin: 0 auto;
+    
+}

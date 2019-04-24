@@ -11,6 +11,67 @@ $(document).ready(function () {
   firebase.initializeApp(config);
 
   database = firebase.database();
+var userName = "";
+  $("#sign-in").on("click", function (event) {
+    event.preventDefault();
+    userName = $("#user-name").val();
+    var email = $("#email").val().trim();
+    var password = $("#password").val().trim();
+    console.log(email, password);
+    if (!email || !password) {
+      alert("please input both email and password to sign in, or create one by registering an account.");
+    } else{
+    firebase.auth().signInWithEmailAndPassword(email, password);
+    
+    
+    
+    }
+  })
+
+  $("#register").on("click", function (event) {
+    event.preventDefault();
+    userName = $("#user-name").val().trim();
+    var email = $("#email").val().trim();
+    var password = $("#password").val().trim();
+    console.log(email, password);
+    if (!email || !password) {
+      alert("please input both email and password to sign in, or create one by registering an account.");
+    } else{
+    firebase.auth().createUserWithEmailAndPassword(email, password);
+   
+    }
+  })
+
+
+  $(".sign-out").on("click", function () {
+    firebase.auth().signOut();
+  })
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if(user){
+      user.updateProfile({
+        displayName: userName
+      })
+    console.log(user.displayName);
+    $("#current-user").text("current user: " + userName);
+      $("#authentication").css("display", "none");
+      $("#train-tracker").css("visibility", "visible");
+    } else {
+      $("#current-user").text("current user: none");
+      $("#authentication").css("display", "block");
+      $("#train-tracker").css("visibility", "hidden");
+    }
+   
+  })
+
+
+
+
+
+
+
+
+
 
 
 
@@ -28,25 +89,25 @@ $(document).ready(function () {
       var firstTrain = moment(trainInput, militaryFormat);
       var timeGap = firstTrain.diff(moment(), "minutes");
 
-//calculating the time to next train
+      //calculating the time to next train
       if (timeGap > 0) {
         nextTrain = firstTrain.format(militaryFormat);
         minutesToNextTrain = timeGap;
-     
+
       } else if (timeGap == 0) {
         nextTrain = firstTrain.format(militaryFormat);
         minutesToNextTrain = 0;
-    
+
       } else {
         var timeGap2 = frequency - Math.abs(timeGap % frequency);
-        temp= moment().add(timeGap2, "minutes");
+        temp = moment().add(timeGap2, "minutes");
         nextTrain = moment(temp).format("HH:mm");
         minutesToNextTrain = timeGap2;
-        
-      }
-nextTrainTime = moment(nextTrain, militaryFormat);
 
-nextTrainTime = nextTrainTime._i;
+      }
+      nextTrainTime = moment(nextTrain, militaryFormat);
+
+      nextTrainTime = nextTrainTime._i;
 
       database.ref().push({
         trainName: trainName,
@@ -68,7 +129,7 @@ nextTrainTime = nextTrainTime._i;
 
   //appending the new train's data to the schedule section
   database.ref().on("child_added", function (snapshot) {
-    
+
     var newTrain = $("<p>").text(snapshot.val().trainName);
     var newDestination = $("<p>").text(snapshot.val().destination);
     var newFrequency = $("<p>").text(snapshot.val().frequency + " min.");
@@ -81,13 +142,21 @@ nextTrainTime = nextTrainTime._i;
     $("#minutes-display").append(newMinutesToNextTrain);
 
   })
+$("#clear").on("click", function(event){
+  event.preventDefault();
+  database.ref().remove();
+  $("#name-display").html("");
+  $("#destination-display").html("");
+  $("#frequency-display").html("");
+  $("#arrival-display").html("");
+  $("#minutes-display").html("");
+})
 
-
-// var timer = setInterval(updateTimes, 5000);
-// function updateTimes(){
-// for (i=0; i<database.ref([i]).length; i++){
-//   console.log('test');
-// }
-// }
+  // var timer = setInterval(updateTimes, 5000);
+  // function updateTimes(){
+  // for (i=0; i<database.ref([i]).length; i++){
+  //   console.log('test');
+  // }
+  // }
 
 })
