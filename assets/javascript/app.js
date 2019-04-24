@@ -11,6 +11,10 @@ $(document).ready(function () {
   firebase.initializeApp(config);
 
   database = firebase.database();
+
+
+
+  //on click function for train submit
   $("#submit").on("click", function () {
     var trainName = $("#new-train").val().trim();
     var destination = $("#new-destination").val().trim();
@@ -24,26 +28,26 @@ $(document).ready(function () {
       var firstTrain = moment(trainInput, militaryFormat);
       var timeGap = firstTrain.diff(moment(), "minutes");
 
+//calculating the time to next train
       if (timeGap > 0) {
         nextTrain = firstTrain.format(militaryFormat);
         minutesToNextTrain = timeGap;
-        console.log(nextTrain, minutesToNextTrain);
+     
       } else if (timeGap == 0) {
         nextTrain = firstTrain.format(militaryFormat);
         minutesToNextTrain = 0;
-        console.log(nextTrain, minutesToNextTrain);
+    
       } else {
         var timeGap2 = frequency - Math.abs(timeGap % frequency);
         temp= moment().add(timeGap2, "minutes");
         nextTrain = moment(temp).format("HH:mm");
         minutesToNextTrain = timeGap2;
-        console.log(nextTrain);
-        console.log(minutesToNextTrain);
+        
       }
 nextTrainTime = moment(nextTrain, militaryFormat);
-console.log(nextTrainTime);
+
 nextTrainTime = nextTrainTime._i;
-console.log(nextTrainTime);
+
       database.ref().push({
         trainName: trainName,
         destination: destination,
@@ -51,7 +55,9 @@ console.log(nextTrainTime);
         nextTrainTime: nextTrainTime,
         minutesToNextTrain: minutesToNextTrain
       })
-      $("#new-train").val("");;
+
+      //clearing the input fields after a train is successfully added.
+      $("#new-train").val("");
       $("#new-destination").val("");
       $("#new-frequency").val("");
       $("#new-first-time").val("");
@@ -59,8 +65,10 @@ console.log(nextTrainTime);
       alert("Pleaase fill in all of the input fields properly before clicking submit");
     }
   })
+
+  //appending the new train's data to the schedule section
   database.ref().on("child_added", function (snapshot) {
-    console.log(snapshot.val());
+    
     var newTrain = $("<p>").text(snapshot.val().trainName);
     var newDestination = $("<p>").text(snapshot.val().destination);
     var newFrequency = $("<p>").text(snapshot.val().frequency + " min.");
@@ -75,6 +83,11 @@ console.log(nextTrainTime);
   })
 
 
-
+// var timer = setInterval(updateTimes, 5000);
+// function updateTimes(){
+// for (i=0; i<database.ref([i]).length; i++){
+//   console.log('test');
+// }
+// }
 
 })
