@@ -11,6 +11,8 @@ $(document).ready(function () {
   firebase.initializeApp(config);
 
   database = firebase.database();
+
+  //authentication stuff. basically passing in values for email and password on the signin/register button clicks and letting firebase handle the creation/checking.
 var userName = "";
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
@@ -21,7 +23,9 @@ var userName = "";
     if (!email || !password) {
       alert("please input both email and password to sign in, or create one by registering an account.");
     } else{
-    firebase.auth().signInWithEmailAndPassword(email, password);
+    firebase.auth().signInWithEmailAndPassword(email, password) .catch(function(error){  //telling users what they need to fix to sign in
+      alert(error.message);
+    });
     
     
     
@@ -37,7 +41,9 @@ var userName = "";
     if (!email || !password) {
       alert("please input both email and password to sign in, or create one by registering an account.");
     } else{
-    firebase.auth().createUserWithEmailAndPassword(email, password);
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error){ // telling users what they need to fix to register
+      alert(error.message);
+    });
    
     }
   })
@@ -46,7 +52,7 @@ var userName = "";
   $(".sign-out").on("click", function () {
     firebase.auth().signOut();
   })
-
+//when the user logs in, we want to save their display name, hide the sign-in form, and show the train scheduler. if they sign out, we don't want them to have access to the train form until they sign back in.
   firebase.auth().onAuthStateChanged(function (user) {
     if(user){
       user.updateProfile({
